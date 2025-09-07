@@ -1,6 +1,6 @@
 # Decentralized Web3 Marketplace
 
-A complete decentralized marketplace as specified in the white paper. This marketplace facilitates interactions between clients and service providers through listings, escrow services, and a dispute resolution mechanism.
+A complete decentralized marketplace as specified in the white paper. This marketplace facilitates interactions between clients and service providers through listings, escrow services, and a dispute resolution mechanism..
 
 ## Core Features
 
