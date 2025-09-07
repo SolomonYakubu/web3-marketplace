@@ -1,0 +1,27 @@
+{
+  "name": "dop-marketplace",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "clean": "hardhat clean",
+    "test": "npx hardhat test --network inMemoryNode",
+    "test:upgrade": "hardhat test --grep \"\\[upgrade\\]\"",
+    "test:upgrade:env": "RUN_UPGRADE=1 hardhat test",
+    "test:abstract": "hardhat test test/marketplace-abstract.test.js --network abstractTestnet",
+    "deploy": "hardhat run scripts/deploy.js --network inMemoryNode",
+    "deploy:abstract": "hardhat run scripts/deploy.js --network abstractTestnet",
+    "upgrade": "hardhat run scripts/upgrade.js --network abstractTestnet"
+  },
+  "devDependencies": {
+    "@matterlabs/hardhat-zksync": "^1.6.2",
+    "@matterlabs/hardhat-zksync-upgradable": "^1.10.0",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.0.2",
+    "@openzeppelin/contracts-upgradeable": "^5.0.2",
+    "@openzeppelin/hardhat-upgrades": "^3.1.0",
+    "dotenv": "^16.6.1",
+    "hardhat": "^2.22.5",
+    "zksync-ethers": "^6.20.1"
+  }
+}
