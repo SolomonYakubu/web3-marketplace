@@ -15,6 +15,11 @@
       "address": "0xcddf5Db5230e8bA7301E66951E8ecA1cE2bE3aa1",
       "txHash": "0x4eb66560ca3d611ebc75e53b6ef6b9e01c0da7b47d62ee38ef2c76d943ffe2a8",
       "kind": "uups"
+    },
+    {
+      "address": "0x880CDe61920822b170EF135179CbC717b3B545Df",
+      "txHash": "0xac606ae2365b6732db2f1561395796ec8d82571868f0e0114edfdec5a175ba97",
+      "kind": "uups"
     }
   ],
   "impls": {
@@ -3851,6 +3856,646 @@
                 "type": "t_uint256"
               }
             ]
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.ReentrancyGuard": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73"
+            }
+          ]
+        }
+      }
+    },
+    "a48a8abfd83dac9594a351eb248c31326ad1f895ec557b779f554dc5b54252a8": {
+      "address": "0x1F900da4C6066434d236D85CBD9eb98f5299D790",
+      "txHash": "0x40ff68ef141b6c72f831400165814dbb1da42394b91f8c2b3495ad6e6c0ff8cc",
+      "layout": {
+        "solcVersion": "0.8.24",
+        "storage": [
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "feeUsdLike",
+            "type": "t_uint256",
+            "src": "contracts/MarketplaceUpgradeable.sol:168"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "feeDop",
+            "type": "t_uint256",
+            "src": "contracts/MarketplaceUpgradeable.sol:169"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "boostPriceDOP",
+            "type": "t_uint256",
+            "src": "contracts/MarketplaceUpgradeable.sol:171"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "boostDuration",
+            "type": "t_uint256",
+            "src": "contracts/MarketplaceUpgradeable.sol:172"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "profileBoostPriceDOP",
+            "type": "t_uint256",
+            "src": "contracts/MarketplaceUpgradeable.sol:174"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "profileBoostDuration",
+            "type": "t_uint256",
+            "src": "contracts/MarketplaceUpgradeable.sol:175"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "treasury",
+            "type": "t_address",
+            "src": "contracts/MarketplaceUpgradeable.sol:177"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "dopToken",
+            "type": "t_contract(IDOPToken)3169",
+            "src": "contracts/MarketplaceUpgradeable.sol:178"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "usdcToken",
+            "type": "t_contract(IERC20)2134",
+            "src": "contracts/MarketplaceUpgradeable.sol:179"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "dexRouter",
+            "type": "t_address",
+            "src": "contracts/MarketplaceUpgradeable.sol:182"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "weth",
+            "type": "t_address",
+            "src": "contracts/MarketplaceUpgradeable.sol:183"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "_listingIdCounter",
+            "type": "t_uint256",
+            "src": "contracts/MarketplaceUpgradeable.sol:185"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "_offerIdCounter",
+            "type": "t_uint256",
+            "src": "contracts/MarketplaceUpgradeable.sol:186"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "listings",
+            "type": "t_mapping(t_uint256,t_struct(Listing)3262_storage)",
+            "src": "contracts/MarketplaceUpgradeable.sol:188"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "offers",
+            "type": "t_mapping(t_uint256,t_struct(Offer)3279_storage)",
+            "src": "contracts/MarketplaceUpgradeable.sol:189"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "escrows",
+            "type": "t_mapping(t_uint256,t_struct(Escrow)3302_storage)",
+            "src": "contracts/MarketplaceUpgradeable.sol:190"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "reputations",
+            "type": "t_mapping(t_address,t_struct(Reputation)3313_storage)",
+            "src": "contracts/MarketplaceUpgradeable.sol:191"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "profiles",
+            "type": "t_mapping(t_address,t_struct(UserProfile)3333_storage)",
+            "src": "contracts/MarketplaceUpgradeable.sol:192"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "userMissions",
+            "type": "t_mapping(t_address,t_array(t_struct(Mission)3348_storage)dyn_storage)",
+            "src": "contracts/MarketplaceUpgradeable.sol:193"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "userBadges",
+            "type": "t_mapping(t_address,t_array(t_enum(Badge)3391)dyn_storage)",
+            "src": "contracts/MarketplaceUpgradeable.sol:194"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "reviewsReceived",
+            "type": "t_mapping(t_address,t_array(t_struct(Review)3361_storage)dyn_storage)",
+            "src": "contracts/MarketplaceUpgradeable.sol:196"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "hasReviewed",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))",
+            "src": "contracts/MarketplaceUpgradeable.sol:197"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "profileBoostExpiry",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "contracts/MarketplaceUpgradeable.sol:199"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "_offersByListing",
+            "type": "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)",
+            "src": "contracts/MarketplaceUpgradeable.sol:201"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "_listingsByCreator",
+            "type": "t_mapping(t_address,t_array(t_uint256)dyn_storage)",
+            "src": "contracts/MarketplaceUpgradeable.sol:202"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "_disputes",
+            "type": "t_mapping(t_uint256,t_struct(DisputeData)3379_storage)",
+            "src": "contracts/MarketplaceUpgradeable.sol:204"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "_disputeLog",
+            "type": "t_array(t_uint256)dyn_storage",
+            "src": "contracts/MarketplaceUpgradeable.sol:205"
+          },
+          {
+            "contract": "MarketplaceUpgradeable",
+            "label": "_usernameOwner",
+            "type": "t_mapping(t_bytes32,t_address)",
+            "src": "contracts/MarketplaceUpgradeable.sol:207"
+          }
+        ],
+        "types": {
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_contract(IDOPToken)3169": {
+            "label": "contract IDOPToken"
+          },
+          "t_contract(IERC20)2134": {
+            "label": "contract IERC20"
+          },
+          "t_mapping(t_uint256,t_struct(Listing)3262_storage)": {
+            "label": "mapping(uint256 => struct MarketplaceUpgradeable.Listing)"
+          },
+          "t_struct(Listing)3262_storage": {
+            "label": "struct MarketplaceUpgradeable.Listing",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256"
+              },
+              {
+                "label": "listingType",
+                "type": "t_enum(ListingType)3232"
+              },
+              {
+                "label": "creator",
+                "type": "t_address"
+              },
+              {
+                "label": "metadataURI",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256"
+              },
+              {
+                "label": "active",
+                "type": "t_bool"
+              },
+              {
+                "label": "boostExpiry",
+                "type": "t_uint256"
+              },
+              {
+                "label": "category",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_enum(ListingType)3232": {
+            "label": "enum MarketplaceUpgradeable.ListingType",
+            "members": [
+              "BRIEF",
+              "GIG"
+            ]
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_mapping(t_uint256,t_struct(Offer)3279_storage)": {
+            "label": "mapping(uint256 => struct MarketplaceUpgradeable.Offer)"
+          },
+          "t_struct(Offer)3279_storage": {
+            "label": "struct MarketplaceUpgradeable.Offer",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256"
+              },
+              {
+                "label": "listingId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "proposer",
+                "type": "t_address"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "paymentToken",
+                "type": "t_address"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256"
+              },
+              {
+                "label": "accepted",
+                "type": "t_bool"
+              },
+              {
+                "label": "cancelled",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_mapping(t_uint256,t_struct(Escrow)3302_storage)": {
+            "label": "mapping(uint256 => struct MarketplaceUpgradeable.Escrow)"
+          },
+          "t_struct(Escrow)3302_storage": {
+            "label": "struct MarketplaceUpgradeable.Escrow",
+            "members": [
+              {
+                "label": "offerId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "client",
+                "type": "t_address"
+              },
+              {
+                "label": "provider",
+                "type": "t_address"
+              },
+              {
+                "label": "paymentToken",
+                "type": "t_address"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "feeAmount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "status",
+                "type": "t_enum(EscrowStatus)3239"
+              },
+              {
+                "label": "clientValidated",
+                "type": "t_bool"
+              },
+              {
+                "label": "providerValidated",
+                "type": "t_bool"
+              },
+              {
+                "label": "disputeOutcome",
+                "type": "t_enum(DisputeOutcome)3244"
+              }
+            ]
+          },
+          "t_enum(EscrowStatus)3239": {
+            "label": "enum MarketplaceUpgradeable.EscrowStatus",
+            "members": [
+              "NONE",
+              "IN_PROGRESS",
+              "COMPLETED",
+              "DISPUTED",
+              "RESOLVED",
+              "CANCELLED"
+            ]
+          },
+          "t_enum(DisputeOutcome)3244": {
+            "label": "enum MarketplaceUpgradeable.DisputeOutcome",
+            "members": [
+              "NONE",
+              "REFUND_CLIENT",
+              "SPLIT",
+              "PAY_PROVIDER"
+            ]
+          },
+          "t_mapping(t_address,t_struct(Reputation)3313_storage)": {
+            "label": "mapping(address => struct MarketplaceUpgradeable.Reputation)"
+          },
+          "t_struct(Reputation)3313_storage": {
+            "label": "struct MarketplaceUpgradeable.Reputation",
+            "members": [
+              {
+                "label": "completedMissions",
+                "type": "t_uint64"
+              },
+              {
+                "label": "disputedMissions",
+                "type": "t_uint64"
+              },
+              {
+                "label": "score",
+                "type": "t_uint128"
+              },
+              {
+                "label": "ratingsCount",
+                "type": "t_uint64"
+              },
+              {
+                "label": "ratingsSum",
+                "type": "t_uint64"
+              }
+            ]
+          },
+          "t_uint64": {
+            "label": "uint64"
+          },
+          "t_uint128": {
+            "label": "uint128"
+          },
+          "t_mapping(t_address,t_struct(UserProfile)3333_storage)": {
+            "label": "mapping(address => struct MarketplaceUpgradeable.UserProfile)"
+          },
+          "t_struct(UserProfile)3333_storage": {
+            "label": "struct MarketplaceUpgradeable.UserProfile",
+            "members": [
+              {
+                "label": "bio",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "skills",
+                "type": "t_array(t_string_storage)dyn_storage"
+              },
+              {
+                "label": "portfolioURIs",
+                "type": "t_array(t_string_storage)dyn_storage"
+              },
+              {
+                "label": "joinedAt",
+                "type": "t_uint256"
+              },
+              {
+                "label": "userType",
+                "type": "t_enum(UserType)3384"
+              },
+              {
+                "label": "isVerified",
+                "type": "t_bool"
+              },
+              {
+                "label": "profilePicCID",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "username",
+                "type": "t_string_storage"
+              }
+            ]
+          },
+          "t_array(t_string_storage)dyn_storage": {
+            "label": "string[]"
+          },
+          "t_enum(UserType)3384": {
+            "label": "enum MarketplaceUpgradeable.UserType",
+            "members": [
+              "PROJECT_OWNER",
+              "DEVELOPER",
+              "ARTIST",
+              "KOL"
+            ]
+          },
+          "t_mapping(t_address,t_array(t_struct(Mission)3348_storage)dyn_storage)": {
+            "label": "mapping(address => struct MarketplaceUpgradeable.Mission[])"
+          },
+          "t_array(t_struct(Mission)3348_storage)dyn_storage": {
+            "label": "struct MarketplaceUpgradeable.Mission[]"
+          },
+          "t_struct(Mission)3348_storage": {
+            "label": "struct MarketplaceUpgradeable.Mission",
+            "members": [
+              {
+                "label": "escrowId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "client",
+                "type": "t_address"
+              },
+              {
+                "label": "provider",
+                "type": "t_address"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "token",
+                "type": "t_address"
+              },
+              {
+                "label": "completedAt",
+                "type": "t_uint256"
+              },
+              {
+                "label": "wasDisputed",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_mapping(t_address,t_array(t_enum(Badge)3391)dyn_storage)": {
+            "label": "mapping(address => enum MarketplaceUpgradeable.Badge[])"
+          },
+          "t_array(t_enum(Badge)3391)dyn_storage": {
+            "label": "enum MarketplaceUpgradeable.Badge[]"
+          },
+          "t_enum(Badge)3391": {
+            "label": "enum MarketplaceUpgradeable.Badge",
+            "members": [
+              "ROOKIE",
+              "EXPERIENCED",
+              "EXPERT",
+              "MASTER",
+              "RELIABLE",
+              "MEDIATOR"
+            ]
+          },
+          "t_mapping(t_address,t_array(t_struct(Review)3361_storage)dyn_storage)": {
+            "label": "mapping(address => struct MarketplaceUpgradeable.Review[])"
+          },
+          "t_array(t_struct(Review)3361_storage)dyn_storage": {
+            "label": "struct MarketplaceUpgradeable.Review[]"
+          },
+          "t_struct(Review)3361_storage": {
+            "label": "struct MarketplaceUpgradeable.Review",
+            "members": [
+              {
+                "label": "offerId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reviewer",
+                "type": "t_address"
+              },
+              {
+                "label": "reviewee",
+                "type": "t_address"
+              },
+              {
+                "label": "rating",
+                "type": "t_uint8"
+              },
+              {
+                "label": "reviewURI",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
+            "label": "mapping(uint256 => mapping(address => bool))"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_mapping(t_uint256,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(uint256 => uint256[])"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]"
+          },
+          "t_mapping(t_address,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(address => uint256[])"
+          },
+          "t_mapping(t_uint256,t_struct(DisputeData)3379_storage)": {
+            "label": "mapping(uint256 => struct MarketplaceUpgradeable.DisputeData)"
+          },
+          "t_struct(DisputeData)3379_storage": {
+            "label": "struct MarketplaceUpgradeable.DisputeData",
+            "members": [
+              {
+                "label": "metadataCID",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "openedBy",
+                "type": "t_address"
+              },
+              {
+                "label": "openedAt",
+                "type": "t_uint256"
+              },
+              {
+                "label": "appeals",
+                "type": "t_array(t_struct(Appeal)3368_storage)dyn_storage"
+              }
+            ]
+          },
+          "t_array(t_struct(Appeal)3368_storage)dyn_storage": {
+            "label": "struct MarketplaceUpgradeable.Appeal[]"
+          },
+          "t_struct(Appeal)3368_storage": {
+            "label": "struct MarketplaceUpgradeable.Appeal",
+            "members": [
+              {
+                "label": "by",
+                "type": "t_address"
+              },
+              {
+                "label": "cid",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_mapping(t_bytes32,t_address)": {
+            "label": "mapping(bytes32 => address)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
           }
         },
         "namespaces": {

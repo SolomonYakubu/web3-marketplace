@@ -6,7 +6,14 @@ async function main() {
   const PROXY = process.env.MARKETPLACE_PROXY;
 
   if (!PROXY) throw new Error("MARKETPLACE_PROXY missing");
-  const TARGET_IMPL = process.env.TARGET_IMPL || "MarketplaceUpgradeable";
+  // Contract name of the new implementation (NOT an address). Override via env MARKETPLACE_IMPL_NAME.
+  const CONTRACT_NAME =
+    process.env.MARKETPLACE_IMPL_NAME || "MarketplaceUpgradeable";
+  if (CONTRACT_NAME.startsWith("0x")) {
+    throw new Error(
+      "MARKETPLACE_IMPL_NAME must be a contract name, not an address. Provide the Solidity contract name."
+    );
+  }
 
   // Build deployer with the active zk wallet
   const networkUrl = hre.network.config?.url || "http://127.0.0.1:8011";
@@ -26,14 +33,16 @@ async function main() {
   const wallet = new Wallet(PRIVATE_KEY, provider);
 
   const deployer = new Deployer(hre, wallet);
-  const implArtifact = await deployer.loadArtifact(TARGET_IMPL);
+  // Ensure artifacts are compiled
+  await hre.run("compile");
+  const implArtifact = await deployer.loadArtifact(CONTRACT_NAME);
   const upgraded = await hre.zkUpgrades.upgradeProxy(
     deployer.zkWallet,
     PROXY,
     implArtifact
   );
   console.log(
-    `Upgraded to ${TARGET_IMPL}, proxy still at`,
+    `Upgraded to implementation ${CONTRACT_NAME}, proxy still at`,
     await upgraded.getAddress()
   );
 }

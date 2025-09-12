@@ -108,6 +108,10 @@ contract MarketplaceUpgradeable is
         uint256 joinedAt;
         UserType userType; // KOL, Developer, Artist, Project Owner
         bool isVerified;
+        // Added (upgrade): optional profile picture IPFS CID
+        string profilePicCID;
+        // Added (upgrade): unique username (empty if legacy profile)
+        string username;
     }
 
     struct Mission {
@@ -199,6 +203,8 @@ contract MarketplaceUpgradeable is
     // New: Disputes storage (non-breaking, appended)
     mapping(uint256 => DisputeData) private _disputes; // offerId => dispute data
     uint256[] private _disputeLog; // append-only log of offerIds when disputes are opened
+    // Username uniqueness index (case-insensitive lowercase key)
+    mapping(bytes32 => address) private _usernameOwner; // keccak256(lowercase username) => owner
 
     event ListingCreated(
         uint256 indexed id,
@@ -291,6 +297,14 @@ contract MarketplaceUpgradeable is
     );
     // Admin: token config updates
     event TokensUpdated(address indexed dopToken, address indexed usdcToken);
+    // Usernames & profile picture events
+    event UsernameRegistered(address indexed user, string username);
+    event UsernameChanged(
+        address indexed user,
+        string oldUsername,
+        string newUsername
+    );
+    event ProfilePicUpdated(address indexed user, string newCid);
 
     modifier onlyParticipant(uint256 offerId) {
         Escrow storage e = escrows[offerId];
@@ -438,53 +452,130 @@ contract MarketplaceUpgradeable is
         string calldata bio,
         string[] calldata skills,
         string[] calldata portfolioURIs,
-        UserType userType
+        UserType userType,
+        string calldata username,
+        string calldata profilePicCID
     ) external {
         require(profiles[msg.sender].joinedAt == 0, "Profile exists");
+        _setUsernameInternal(msg.sender, "", username); // claim username (must be unique)
 
         UserProfile storage profile = profiles[msg.sender];
         profile.bio = bio;
         profile.joinedAt = block.timestamp;
         profile.userType = userType;
         profile.isVerified = false;
+        profile.profilePicCID = profilePicCID; // optional, can be empty
+        profile.username = username;
 
-        // Handle dynamic arrays separately
+        // Handle dynamic arrays
         delete profile.skills;
         delete profile.portfolioURIs;
-
-        for (uint i = 0; i < skills.length; i++) {
-            profile.skills.push(skills[i]);
-        }
-
-        for (uint i = 0; i < portfolioURIs.length; i++) {
-            profile.portfolioURIs.push(portfolioURIs[i]);
-        }
+        for (uint i = 0; i < skills.length; i++) profile.skills.push(skills[i]);
+        for (uint j = 0; j < portfolioURIs.length; j++)
+            profile.portfolioURIs.push(portfolioURIs[j]);
 
         emit ProfileCreated(msg.sender, userType);
+        emit UsernameRegistered(msg.sender, username);
+        if (bytes(profilePicCID).length > 0)
+            emit ProfilePicUpdated(msg.sender, profilePicCID);
     }
 
     function updateProfile(
         string calldata bio,
         string[] calldata skills,
-        string[] calldata portfolioURIs
+        string[] calldata portfolioURIs,
+        string calldata profilePicCID
     ) external {
         require(profiles[msg.sender].joinedAt != 0, "No profile");
         UserProfile storage profile = profiles[msg.sender];
         profile.bio = bio;
+        profile.profilePicCID = profilePicCID; // empty allowed (clears)
 
         // Clear and rebuild arrays
         delete profile.skills;
         delete profile.portfolioURIs;
-
-        for (uint i = 0; i < skills.length; i++) {
-            profile.skills.push(skills[i]);
-        }
-
-        for (uint i = 0; i < portfolioURIs.length; i++) {
-            profile.portfolioURIs.push(portfolioURIs[i]);
-        }
+        for (uint i = 0; i < skills.length; i++) profile.skills.push(skills[i]);
+        for (uint j = 0; j < portfolioURIs.length; j++)
+            profile.portfolioURIs.push(portfolioURIs[j]);
 
         emit ProfileUpdated(msg.sender);
+        if (bytes(profilePicCID).length > 0)
+            emit ProfilePicUpdated(msg.sender, profilePicCID);
+    }
+
+    // (Removed V2 functions; base functions now include username & profile picture)
+
+    // Set or change username
+    function setUsername(string calldata newUsername) external {
+        require(profiles[msg.sender].joinedAt != 0, "No profile");
+        UserProfile storage profile = profiles[msg.sender];
+        string memory old = profile.username;
+        _setUsernameInternal(msg.sender, old, newUsername);
+        profile.username = newUsername;
+        if (bytes(old).length == 0)
+            emit UsernameRegistered(msg.sender, newUsername);
+        else emit UsernameChanged(msg.sender, old, newUsername);
+    }
+
+    // Set or clear profile picture
+    function setProfilePic(string calldata cid) external {
+        require(profiles[msg.sender].joinedAt != 0, "No profile");
+        profiles[msg.sender].profilePicCID = cid; // empty allowed
+        emit ProfilePicUpdated(msg.sender, cid);
+    }
+
+    // View: username existence (case-insensitive)
+    function usernameExists(
+        string calldata username
+    ) external view returns (bool) {
+        bytes memory b = bytes(username);
+        if (b.length < 3 || b.length > 32) return false;
+        for (uint i = 0; i < b.length; i++) {
+            bytes1 c = b[i];
+            if (c >= 0x41 && c <= 0x5A) b[i] = bytes1(uint8(c) + 32); // to lowercase
+        }
+        bytes32 key = keccak256(b);
+        return _usernameOwner[key] != address(0);
+    }
+
+    function getUsername(address user) external view returns (string memory) {
+        return profiles[user].username;
+    }
+
+    // Internal helpers for usernames
+    function _usernameKey(
+        string memory username
+    ) internal pure returns (bytes32) {
+        bytes memory b = bytes(username);
+        require(b.length >= 3 && b.length <= 32, "uname-len");
+        for (uint i = 0; i < b.length; i++) {
+            bytes1 c = b[i];
+            if (c >= 0x41 && c <= 0x5A) {
+                c = bytes1(uint8(c) + 32);
+                b[i] = c;
+            }
+            bool ok = (c >= 0x61 && c <= 0x7A) ||
+                (c >= 0x30 && c <= 0x39) ||
+                c == 0x5F ||
+                c == 0x2E; // a-z 0-9 _ .
+            require(ok, "uname-chars");
+        }
+        return keccak256(b);
+    }
+
+    function _setUsernameInternal(
+        address user,
+        string memory oldUsername,
+        string memory newUsername
+    ) internal {
+        require(bytes(newUsername).length > 0, "uname-empty");
+        bytes32 key = _usernameKey(newUsername);
+        require(_usernameOwner[key] == address(0), "uname-taken");
+        if (bytes(oldUsername).length > 0) {
+            bytes32 oldKey = _usernameKey(oldUsername);
+            _usernameOwner[oldKey] = address(0);
+        }
+        _usernameOwner[key] = user;
     }
 
     function verifyProfile(address user) external onlyOwner {
@@ -1065,7 +1156,9 @@ contract MarketplaceUpgradeable is
             string[] memory portfolioURIs,
             uint256 joinedAt,
             UserType userType,
-            bool isVerified
+            bool isVerified,
+            string memory profilePicCID,
+            string memory username
         )
     {
         UserProfile storage p = profiles[user];
@@ -1075,7 +1168,9 @@ contract MarketplaceUpgradeable is
             p.portfolioURIs,
             p.joinedAt,
             p.userType,
-            p.isVerified
+            p.isVerified,
+            p.profilePicCID,
+            p.username
         );
     }
 
